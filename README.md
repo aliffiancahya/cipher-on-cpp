@@ -1,8 +1,5 @@
 # ˈsīfər
 
-Program ini dapat melakukan cipher/konversi dari string teks menjadi bilangan biner, desimal, heksadesimal, dan oktal begitupun sebaliknya <br>
-Lalu setiap ciper yang dilakukan akan direkam dan otomatis disimpan ke dalam file eksternal berformat .bin <br>
-Dan data yang telah direkam di database dapat dimodifikasi <br>
 Enchiper (~Mengubah sebuah pesan menjadi sebuah kode)<br>
 Dechiper (~Mengubah kode menjadi sebuah pesan)
 
@@ -39,10 +36,9 @@ Dechiper (~Mengubah kode menjadi sebuah pesan)
 ![](screenshoot/menuRiwayat_3.png)
 
 ---
-### Fitur yang tersedia
+### List Fitur
 ---
-
-| List fitur      | TERSEDIA |   BELUM  |     BUG     |
+|      Fitur      | TERSEDIA |   BELUM  |     BUG     |
 |-----------------|:--------:|:--------:|-------------|
 | TEKS ke Biner   |    ✅    |          | None so far |
 | Biner ke Teks   |    ✅    |          | None so far |
@@ -63,4 +59,3 @@ Dechiper (~Mengubah kode menjadi sebuah pesan)
 ---
 Baris kode yang masih terlalu panjang <br>
 Penulisan kode masih belum efisien <br>
-ART nya belum muncul

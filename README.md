@@ -11,29 +11,29 @@ Dechiper (~Mengubah kode menjadi sebuah pesan)
 
 - Awal program
 
-![](screenshoot/awalProgram.png)
+![](screenshot/awalProgram.png)
 
 - Menu Cipher
 
-![](screenshoot/menuCipher.png)
+![](screenshot/menuCipher.png)
 
 - Menu Decipher
 
-![](screenshoot/menuDecipher.png)
+![](screenshot/menuDecipher.png)
 
 - Menu Encipher
 
-![](screenshoot/menuEncipher.png)
+![](screenshot/menuEncipher.png)
 
 - Menu Riwayat
 
-![](screenshoot/menuRiwayat.png)
+![](screenshot/menuRiwayat.png)
 
-![](screenshoot/menuRiwayat_1.png)
+![](screenshot/menuRiwayat_1.png)
 
-![](screenshoot/menuRiwayat_2.png)
+![](screenshot/menuRiwayat_2.png)
 
-![](screenshoot/menuRiwayat_3.png)
+![](screenshot/menuRiwayat_3.png)
 
 ---
 ### List Fitur

@@ -27,11 +27,11 @@ Decipher (~Mengubah kode menjadi sebuah pesan)
 
 - Menu Riwayat (READ, UPDATE, DELETE)
 
-![](screenshoot/menuHistory.png)
+![](screenshot/menuHistory.png)
 
-![](screenshoot/menuUpdate.png)
+![](screenshot/menuUpdate.png)
 
-![](screenshoot/menuDelete.png)
+![](screenshot/menuDelete.png)
 
 ---
 
@@ -41,7 +41,7 @@ Decipher (~Mengubah kode menjadi sebuah pesan)
 
 - Auto Enter
 
-![](screenshoot/autoKlil.gif)
+![](screenshot/autoKlil.gif)
 
 Fitur ini membutuhkan library tambahan!
 

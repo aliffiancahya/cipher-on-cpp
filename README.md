@@ -83,6 +83,28 @@ Cara install:
 sudo apt install libncurses5-dev libncursesw5-dev
 ```
 
+#### Fedora
+
+```sh
+
+sudo dnf install ncurses-devel
+
+```
+
+<br>
+
+Lalu setelah pasang linker -lncurses pada IDE<br>
+
+Atau bisa menambahkannya saat akan compile secara manual<br>
+
+Misal CMD atau Terminal sudah ada di folder yang sama dengan source code (bernama main.cpp), maka
+
+```sh
+
+g++ -lncurses main.cpp -o main
+
+```
+
 ---
 
 ### List Fitur

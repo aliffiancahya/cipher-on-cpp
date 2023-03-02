@@ -41,7 +41,7 @@ Decipher (~Mengubah kode menjadi sebuah pesan)
 
 - Auto Enter
 
-![](screenshot/autoKlil.gif)
+![](screenshot/autoKlik.gif)
 
 Fitur ini membutuhkan library tambahan!
 

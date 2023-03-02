@@ -61,13 +61,13 @@ Pastikan ncurses telah terinstall<br>
 <br>
 Berikut cara memastikan apakah ncurses terinstall:
 
-#### Ubuntu
+#### Ubuntu (Atau Linux berbasis Debian lainnya)
 
 ```sh
 dpkg -s libncurses5-dev
 ```
 
-#### Fedora
+#### Fedora (Atau semua Linux berbasis Red Hat)
 
 ```sh
 rpm -qa | grep ncurses
@@ -77,13 +77,13 @@ Jika ncurses tidak ditemukan, maka install terlebih dahulu<br>
 <br>
 Cara install:
 
-#### Ubuntu
+#### Ubuntu (Atau Linux berbasis Debian lainnya)
 
 ```sh
 sudo apt install libncurses5-dev libncursesw5-dev
 ```
 
-#### Fedora
+#### Fedora (Atau Linux berbasis Red Hat lainnya)
 
 ```sh
 
@@ -93,9 +93,9 @@ sudo dnf install ncurses-devel
 
 <br>
 
-Lalu setelah pasang linker -lncurses pada IDE<br>
+Lalu setelah itu pasang linker -lncurses pada IDE<br>
 
-Atau bisa menambahkannya saat akan compile secara manual<br>
+Atau bisa menambahkannya saat akan melakukan proses compile secara manual<br>
 
 Misal CMD atau Terminal sudah ada di folder yang sama dengan source code (bernama main.cpp), maka
 

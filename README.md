@@ -11,19 +11,19 @@ Decipher (~Mengubah kode menjadi sebuah pesan)
 
 - Awal program
 
-![](screenshoot/awalProgram.png)
+![](screenshot/awalProgram.png)
 
 - Menu Cipher
 
-![](screenshoot/menuCipher.png)
+![](screenshot/menuCipher.png)
 
 - Menu Decipher
 
-![](screenshoot/menuDecipher.png)
+![](screenshot/menuDecipher.png)
 
 - Menu Encipher
 
-![](screenshoot/menuEncipher.png)
+![](screenshot/menuEncipher.png)
 
 - Menu Riwayat (READ, UPDATE, DELETE)
 
@@ -81,22 +81,6 @@ Cara install:
 
 ```sh
 sudo apt install libncurses5-dev libncursesw5-dev
-```
-
-#### Fedora
-
-```sh
-sudo dnf install ncurses-devel
-```
-
-<br>
-Lalu setelah itu pasang linker -lncurses pada IDE<br>
-Atau bisa menambahkannya saat akan compile secara manual<br>
-Misal CMD atau Terminal sudah ada di folder yang sama dengan source code (bernama main.cpp), maka<br>
-<br>
-
-```sh
-g++ -lncurses main.cpp -o main
 ```
 
 ---

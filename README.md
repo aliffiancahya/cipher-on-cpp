@@ -67,7 +67,7 @@ Berikut cara memastikan apakah ncurses terinstall:
 dpkg -s libncurses5-dev
 ```
 
-#### Fedora (Atau semua Linux berbasis Red Hat)
+#### Fedora (Atau Linux berbasis Red Hat lainnya)
 
 ```sh
 rpm -qa | grep ncurses

@@ -1,12 +1,13 @@
 #include <iostream>
 #include <cstring>
 #include <string>
+#include <sstream>
 #include <fstream>
 #include <bitset>
 #include <iomanip>
-#include <stdio.h>
 #include <thread>
 #include <chrono>
+#include <stdio.h>
 #include <ncurses.h>
 #include <unistd.h>
 
@@ -26,8 +27,12 @@ struct Cipher
     int kosongDESIMALkeTEKS = 4;
     char DESIMALkeTEKS_teks[1000];
     char DESIMALkeTEKS_hasil[8000];
-    // char teksHeksa[1000]
-    // char hasilHeksa[]
+    int kosongTEKSkeHEKSA = 5;
+    char TEKSkeHEKSA_teks[1000];
+    char TEKSkeHEKSA_hasil[8000];
+    int kosongHEKSAkeTEKS = 6;
+    char HEKSAkeTEKS_teks[1000];
+    char HEKSAkeTEKS_hasil[8000];
     // char teksOktal[1000]
     // char hasilOktal[]
 };
@@ -39,18 +44,22 @@ void cekData_TEKSkeBINER(fstream &data);
 void cekData_BINERkeTEKS(fstream &data2);
 void cekData_TEKSkeDESIMAL(fstream &data3);
 void cekData_DESIMALkeTEKS(fstream &data4);
+void cekData_TEKSkeHEKSA(fstream &data5);
+void cekData_HEKSAkeTEKS(fstream &data6);
 void tulisTEKSkeBINER(fstream &data, int pos, Cipher &inputTEKSkeBINER);
 void tulisBINERkeTEKS(fstream &data2, int pos, Cipher &inputBINERkeTEKS);
 void tulisTEKSkeDESIMAL(fstream &data3, int pos, Cipher &inputTEKSkeDESIMAL);
 void tulisDESIMALkeTEKS(fstream &data4, int pos, Cipher &inputDESIMALkeTEKS);
+void tulisTEKSkeHEKSA(fstream &data5, int pos, Cipher &inputTEKSkeHEKSA);
+void tulisHEKSAkeTEKS(fstream &data6, int pos, Cipher &inputHEKSAkeTEKS);
 void menuEncipher();
 void menuDecipher();
-void pilihMenu_encipher(fstream &data, fstream &data3);
-void pilihMenu_decipher(fstream &data2, fstream &data4);
-void pilihMenu_riwayat(fstream &data, fstream &data2, fstream &data3, fstream &data4);
-void pilihMenu_update(fstream &data, fstream &data2, fstream &data3, fstream &data4);
-void pilihMenu_delete(fstream &data, fstream &data2, fstream &data3, fstream &data4);
-void menuRUD(fstream &data, fstream &data2, fstream &data3, fstream &data4); // RUD = READ, UPDATE, DELETE
+void pilihMenu_encipher(fstream &data, fstream &data3, fstream &data5);
+void pilihMenu_decipher(fstream &data2, fstream &data4, fstream &data6);
+void pilihMenu_riwayat(fstream &data, fstream &data2, fstream &data3, fstream &data4, fstream &data5, fstream &data6);
+void pilihMenu_update(fstream &data, fstream &data2, fstream &data3, fstream &data4, fstream &data5, fstream &data6);
+void pilihMenu_delete(fstream &data, fstream &data2, fstream &data3, fstream &data4, fstream &data5, fstream &data6);
+void menuRUD(fstream &data, fstream &data2, fstream &data3, fstream &data4, fstream &data5, fstream &data6); // RUD = READ, UPDATE, DELETE
 void TEKSkeBINER(fstream &data);
 void tampilkanTEKSkeBINER(fstream &data);
 void ubahTEKSkeBINER(fstream &data);
@@ -67,6 +76,14 @@ void DESIMALkeTEKS(fstream &data4);
 void tampilkanDESIMALkeTEKS(fstream &data4);
 void ubahDESIMALkeTEKS(fstream &data4);
 void apusDESIMALkeTEKS(fstream &data4);
+void TEKSkeHEKSA(fstream &data5);
+void tampilkanTEKSkeHEKSA(fstream &data5);
+void ubahTEKSkeHEKSA(fstream &data5);
+void apusTEKSkeHEKSA(fstream &data5);
+void HEKSAkeTEKS(fstream &data6);
+void tampilkanHEKSAkeTEKS(fstream &data6);
+void ubahHEKSAkeTEKS(fstream &data6);
+void apusHEKSAkeTEKS(fstream &data6);
 void autoEnter();
 void bannerSelamatDatang();
 void bannerInfo();
@@ -113,7 +130,7 @@ char getPilihan()
 int main()
 {
     system("clear");
-    fstream data, data2, data3, data4;
+    fstream data, data2, data3, data4, data5, data6;
     char pilih;
 
     bannerSelamatDatang();
@@ -122,6 +139,8 @@ int main()
     cekData_BINERkeTEKS(data2);
     cekData_TEKSkeDESIMAL(data3);
     cekData_DESIMALkeTEKS(data4);
+    cekData_TEKSkeHEKSA(data5);
+    cekData_HEKSAkeTEKS(data6);
 
     while (pilih != '0')
     {
@@ -132,19 +151,19 @@ int main()
         {
             system("clear");
             bannerEncipher();
-            pilihMenu_encipher(data, data3);
+            pilihMenu_encipher(data, data3, data5);
         }
         else if (pilih == '2')
         {
             system("clear");
             bannerDecipher();
-            pilihMenu_decipher(data2, data4);
+            pilihMenu_decipher(data2, data4, data6);
         }
         else if (pilih == '3')
         {
             system("clear");
             bannerRiwayat();
-            menuRUD(data, data2, data3, data4);
+            menuRUD(data, data2, data3, data4, data5, data6);
         }
         else if (pilih == '0')
         {
@@ -252,6 +271,32 @@ void cekData_DESIMALkeTEKS(fstream &data4)
     }
 }
 
+void cekData_TEKSkeHEKSA(fstream &data5)
+{
+    data5.open("data_TEKSkeHEKSA.bin", ios::out | ios::in | ios::binary);
+    if (data5.is_open())
+    {
+    }
+    else
+    {
+        data5.close();
+        data5.open("data_TEKSkeHEKSA.bin", ios::trunc | ios::out | ios::in | ios::binary);
+    }
+}
+
+void cekData_HEKSAkeTEKS(fstream &data6)
+{
+    data6.open("data_HEKSAkeTEKS.bin", ios::out | ios::in | ios::binary);
+    if (data6.is_open())
+    {
+    }
+    else
+    {
+        data6.close();
+        data6.open("data_HEKSAkeTEKS.bin", ios::trunc | ios::out | ios::in | ios::binary);
+    }
+}
+
 void tulisTEKSkeBINER(fstream &data, int pos, Cipher &inputTEKSkeBINER)
 {
     data.seekp((pos - 1) * sizeof(Cipher), ios::beg);
@@ -276,6 +321,19 @@ void tulisDESIMALkeTEKS(fstream &data4, int pos, Cipher &inputDESIMALkeTEKS)
     data4.write(reinterpret_cast<char *>(&inputDESIMALkeTEKS), sizeof(Cipher));
 }
 
+void tulisTEKSkeHEKSA(fstream &data5, int pos, Cipher &inputTEKSkeHEKSA)
+{
+
+    data5.seekp((pos - 1) * sizeof(Cipher), ios::beg);
+    data5.write(reinterpret_cast<char *>(&inputTEKSkeHEKSA), sizeof(Cipher));
+}
+
+void tulisHEKSAkeTEKS(fstream &data6, int pos, Cipher &inputHEKSAkeTEKS)
+{
+    data6.seekp((pos - 1) * sizeof(Cipher), ios::beg);
+    data6.write(reinterpret_cast<char *>(&inputHEKSAkeTEKS), sizeof(Cipher));
+}
+
 void menuEncipher()
 {
     cout << setw(45) << "Pilih menu" << endl;
@@ -298,32 +356,69 @@ void menuDecipher()
     cout << setw(42) << "Pilih? ";
 }
 
-void pilihMenu_encipher(fstream &data, fstream &data3)
+void pilihMenu_encipher(fstream &data, fstream &data3, fstream &data5)
 {
-    char pilihDecipher;
+    char pilihEncipher;
 
     menuEncipher();
     autoEnter();
-    pilihDecipher = getchar();
+    pilihEncipher = getchar();
     endwin();
     cout << "\n\n\n";
-    if (pilihDecipher == '1')
+    if (pilihEncipher == '1')
     {
         TEKSkeBINER(data);
         fungsiExit();
     }
-    else if (pilihDecipher == '2')
+    else if (pilihEncipher == '2')
     {
         TEKSkeDESIMAL(data3);
         fungsiExit();
-        // cout << "COMING SOON !" << endl;
-        //  cout << endl;
+    }
+    else if (pilihEncipher == '3')
+    {
+        TEKSkeHEKSA(data5);
+        fungsiExit();
+    }
+    else if (pilihEncipher == '4')
+    {
+        // TEKSkeOKTAL();
+        cout << "COMING SOON !" << endl;
+        cout << endl;
+    }
+    else if (pilihEncipher == '0')
+    {
+        // kembali
+    }
+    else
+    {
+        fungsiExit();
+    }
+}
+
+void pilihMenu_decipher(fstream &data2, fstream &data4, fstream &data6)
+{
+    char pilihDecipher;
+
+    menuDecipher();
+    autoEnter();
+    pilihDecipher = getchar();
+    endwin();
+    cout << "\n\n";
+    if (pilihDecipher == '1')
+    {
+        BINERkeTEKS(data2);
+        fungsiExit();
+    }
+    else if (pilihDecipher == '2')
+    {
+        DESIMALkeTEKS(data4);
+        fungsiExit();
     }
     else if (pilihDecipher == '3')
     {
-        // TEKSkeHEKSA();
-        cout << "COMING SOON !" << endl;
-        cout << endl;
+        HEKSAkeTEKS(data6);
+        fungsiExit();
     }
     else if (pilihDecipher == '4')
     {
@@ -337,61 +432,22 @@ void pilihMenu_encipher(fstream &data, fstream &data3)
     }
     else
     {
-        fungsiExit();
-    }
-}
-
-void pilihMenu_decipher(fstream &data2, fstream &data4)
-{
-    char pilihUndecipher;
-
-    menuDecipher();
-    autoEnter();
-    pilihUndecipher = getchar();
-    endwin();
-    cout << "\n\n";
-    if (pilihUndecipher == '1')
-    {
-        BINERkeTEKS(data2);
-        fungsiExit();
-    }
-    else if (pilihUndecipher == '2')
-    {
-        DESIMALkeTEKS(data4);
-        fungsiExit();
-    }
-    else if (pilihUndecipher == '3')
-    {
-        // TEKSkeHEKSA();
-        cout << "COMING SOON !" << endl;
-        cout << endl;
-    }
-    else if (pilihUndecipher == '4')
-    {
-        // TEKSkeOKTAL();
-        cout << "COMING SOON !" << endl;
-        cout << endl;
-    }
-    else if (pilihUndecipher == '0')
-    {
-        // kembali
-    }
-    else
-    {
         cout << endl;
         fungsiExit();
     }
 }
 
-void pilihMenu_riwayat(fstream &data, fstream &data2, fstream &data3, fstream &data4)
+void pilihMenu_riwayat(fstream &data, fstream &data2, fstream &data3, fstream &data4, fstream &data5, fstream &data6)
 {
     char pilihRiwayat, pilihRiwayat2;
-    int size, size2, size3, size4;
+    int size, size2, size3, size4, size5, size6;
 
     size = ambilUkuran_data(data);
     size2 = ambilUkuran_data(data2);
     size3 = ambilUkuran_data(data3);
     size4 = ambilUkuran_data(data4);
+    size5 = ambilUkuran_data(data5);
+    size6 = ambilUkuran_data(data6);
 
     cout << setw(46) << "Pilih menu" << endl;
     cout << setw(47) << "[1] Encipher" << endl;
@@ -415,6 +471,7 @@ void pilihMenu_riwayat(fstream &data, fstream &data2, fstream &data3, fstream &d
             if (size < 1)
             {
                 cout << "Riwayat tidak ditemukan!" << endl;
+                cout << endl;
                 fungsiExit();
             }
             else
@@ -428,6 +485,7 @@ void pilihMenu_riwayat(fstream &data, fstream &data2, fstream &data3, fstream &d
             if (size3 < 1)
             {
                 cout << "Riwayat tidak ditemukan!" << endl;
+                cout << endl;
                 fungsiExit();
             }
             else
@@ -438,9 +496,17 @@ void pilihMenu_riwayat(fstream &data, fstream &data2, fstream &data3, fstream &d
         }
         else if (pilihRiwayat2 == '3')
         {
-            // tampilkanHeksa();
-            cout << "COMING SOON !" << endl;
-            cout << endl;
+            if (size5 < 1)
+            {
+                cout << "Riwayat tidak ditemukan!" << endl;
+                cout << endl;
+                fungsiExit();
+            }
+            else
+            {
+                tampilkanTEKSkeHEKSA(data5);
+                fungsiExit();
+            }
         }
         else if (pilihRiwayat2 == '4')
         {
@@ -452,7 +518,7 @@ void pilihMenu_riwayat(fstream &data, fstream &data2, fstream &data3, fstream &d
         {
             system("clear");
             bannerRiwayat();
-            pilihMenu_riwayat(data, data2, data3, data4);
+            pilihMenu_riwayat(data, data2, data3, data4, data5, data6);
         }
         else
         {
@@ -473,6 +539,7 @@ void pilihMenu_riwayat(fstream &data, fstream &data2, fstream &data3, fstream &d
             if (size2 < 1)
             {
                 cout << "Riwayat tidak ditemukan!" << endl;
+                cout << endl;
                 fungsiExit();
             }
             else
@@ -486,6 +553,7 @@ void pilihMenu_riwayat(fstream &data, fstream &data2, fstream &data3, fstream &d
             if (size4 < 1)
             {
                 cout << "Riwayat tidak ditemukan!" << endl;
+                cout << endl;
                 fungsiExit();
             }
             else
@@ -496,9 +564,17 @@ void pilihMenu_riwayat(fstream &data, fstream &data2, fstream &data3, fstream &d
         }
         else if (pilihRiwayat2 == '3')
         {
-            // tampilkanHeksa();
-            cout << "COMING SOON !" << endl;
-            cout << endl;
+            if (size6 < 1)
+            {
+                cout << "Riwayat tidak ditemukan!" << endl;
+                cout << endl;
+                fungsiExit();
+            }
+            else
+            {
+                tampilkanHEKSAkeTEKS(data6);
+                fungsiExit();
+            }
         }
         else if (pilihRiwayat2 == '4')
         {
@@ -510,7 +586,7 @@ void pilihMenu_riwayat(fstream &data, fstream &data2, fstream &data3, fstream &d
         {
             system("clear");
             bannerRiwayat();
-            pilihMenu_riwayat(data, data2, data3, data4);
+            pilihMenu_riwayat(data, data2, data3, data4, data5, data6);
         }
         else
         {
@@ -521,7 +597,7 @@ void pilihMenu_riwayat(fstream &data, fstream &data2, fstream &data3, fstream &d
     {
         system("clear");
         bannerRiwayat();
-        menuRUD(data, data2, data3, data4);
+        menuRUD(data, data2, data3, data4, data5, data6);
     }
     else
     {
@@ -529,15 +605,17 @@ void pilihMenu_riwayat(fstream &data, fstream &data2, fstream &data3, fstream &d
     }
 }
 
-void pilihMenu_update(fstream &data, fstream &data2, fstream &data3, fstream &data4)
+void pilihMenu_update(fstream &data, fstream &data2, fstream &data3, fstream &data4, fstream &data5, fstream &data6)
 {
     char pilihUpdate, pilihUpdate2;
-    int size, size2, size3, size4;
+    int size, size2, size3, size4, size5, size6;
 
     size = ambilUkuran_data(data);
     size2 = ambilUkuran_data(data2);
     size3 = ambilUkuran_data(data3);
     size4 = ambilUkuran_data(data4);
+    size5 = ambilUkuran_data(data5);
+    size6 = ambilUkuran_data(data6);
 
     cout << setw(46) << "Pilih menu" << endl;
     cout << setw(47) << "[1] Encipher" << endl;
@@ -561,6 +639,7 @@ void pilihMenu_update(fstream &data, fstream &data2, fstream &data3, fstream &da
             if (size < 1)
             {
                 cout << "Riwayat tidak ditemukan!" << endl;
+                cout << endl;
                 fungsiExit();
             }
             else
@@ -575,6 +654,7 @@ void pilihMenu_update(fstream &data, fstream &data2, fstream &data3, fstream &da
             if (size3 < 1)
             {
                 cout << "Riwayat tidak ditemukan!" << endl;
+                cout << endl;
                 fungsiExit();
             }
             else
@@ -586,9 +666,18 @@ void pilihMenu_update(fstream &data, fstream &data2, fstream &data3, fstream &da
         }
         else if (pilihUpdate2 == '3')
         {
-            // tampilkanHeksa();
-            cout << "COMING SOON !" << endl;
-            cout << endl;
+            if (size5 < 1)
+            {
+                cout << "Riwayat tidak ditemukan!" << endl;
+                cout << endl;
+                fungsiExit();
+            }
+            else
+            {
+                tampilkanTEKSkeHEKSA(data5);
+                ubahTEKSkeHEKSA(data5);
+                fungsiExit();
+            }
         }
         else if (pilihUpdate2 == '4')
         {
@@ -600,7 +689,7 @@ void pilihMenu_update(fstream &data, fstream &data2, fstream &data3, fstream &da
         {
             system("clear");
             bannerUpdate();
-            pilihMenu_update(data, data2, data3, data4);
+            pilihMenu_update(data, data2, data3, data4, data5, data6);
         }
         else
         {
@@ -621,6 +710,7 @@ void pilihMenu_update(fstream &data, fstream &data2, fstream &data3, fstream &da
             if (size2 < 1)
             {
                 cout << "Riwayat tidak ditemukan!" << endl;
+                cout << endl;
                 fungsiExit();
             }
             else
@@ -635,6 +725,7 @@ void pilihMenu_update(fstream &data, fstream &data2, fstream &data3, fstream &da
             if (size4 < 1)
             {
                 cout << "Riwayat tidak ditemukan!" << endl;
+                cout << endl;
                 fungsiExit();
             }
             else
@@ -646,9 +737,18 @@ void pilihMenu_update(fstream &data, fstream &data2, fstream &data3, fstream &da
         }
         else if (pilihUpdate2 == '3')
         {
-            // tampilkanHeksa();
-            cout << "COMING SOON !" << endl;
-            cout << endl;
+            if (size6 < 1)
+            {
+                cout << "Riwayat tidak ditemukan!" << endl;
+                cout << endl;
+                fungsiExit();
+            }
+            else
+            {
+                tampilkanHEKSAkeTEKS(data6);
+                ubahHEKSAkeTEKS(data6);
+                fungsiExit();
+            }
         }
         else if (pilihUpdate2 == '4')
         {
@@ -660,7 +760,7 @@ void pilihMenu_update(fstream &data, fstream &data2, fstream &data3, fstream &da
         {
             system("clear");
             bannerUpdate();
-            pilihMenu_update(data, data2, data3, data4);
+            pilihMenu_update(data, data2, data3, data4, data5, data6);
         }
         else
         {
@@ -671,7 +771,7 @@ void pilihMenu_update(fstream &data, fstream &data2, fstream &data3, fstream &da
     {
         system("clear");
         bannerRiwayat();
-        menuRUD(data, data2, data3, data4);
+        menuRUD(data, data2, data3, data4, data5, data6);
     }
     else
     {
@@ -679,15 +779,17 @@ void pilihMenu_update(fstream &data, fstream &data2, fstream &data3, fstream &da
     }
 }
 
-void pilihMenu_delete(fstream &data, fstream &data2, fstream &data3, fstream &data4)
+void pilihMenu_delete(fstream &data, fstream &data2, fstream &data3, fstream &data4, fstream &data5, fstream &data6)
 {
     char pilihDelete, pilihDelete2;
-    int size, size2, size3, size4;
+    int size, size2, size3, size4, size5, size6;
 
     size = ambilUkuran_data(data);
     size2 = ambilUkuran_data(data2);
     size3 = ambilUkuran_data(data3);
     size4 = ambilUkuran_data(data4);
+    size5 = ambilUkuran_data(data5);
+    size6 = ambilUkuran_data(data6);
 
     cout << setw(46) << "Pilih menu" << endl;
     cout << setw(47) << "[1] Encipher" << endl;
@@ -711,6 +813,7 @@ void pilihMenu_delete(fstream &data, fstream &data2, fstream &data3, fstream &da
             if (size < 1)
             {
                 cout << "Riwayat tidak ditemukan!" << endl;
+                cout << endl;
                 fungsiExit();
             }
             else
@@ -725,6 +828,7 @@ void pilihMenu_delete(fstream &data, fstream &data2, fstream &data3, fstream &da
             if (size3 < 1)
             {
                 cout << "Riwayat tidak ditemukan!" << endl;
+                cout << endl;
                 fungsiExit();
             }
             else
@@ -736,9 +840,18 @@ void pilihMenu_delete(fstream &data, fstream &data2, fstream &data3, fstream &da
         }
         else if (pilihDelete2 == '3')
         {
-            // tampilkanHeksa();
-            cout << "COMING SOON !" << endl;
-            cout << endl;
+            if (size5 < 1)
+            {
+                cout << "Riwayat tidak ditemukan!" << endl;
+                cout << endl;
+                fungsiExit();
+            }
+            else
+            {
+                tampilkanTEKSkeHEKSA(data5);
+                apusTEKSkeHEKSA(data5);
+                fungsiExit();
+            }
         }
         else if (pilihDelete2 == '4')
         {
@@ -750,7 +863,7 @@ void pilihMenu_delete(fstream &data, fstream &data2, fstream &data3, fstream &da
         {
             system("clear");
             bannerDelete();
-            pilihMenu_delete(data, data2, data3, data4);
+            pilihMenu_delete(data, data2, data3, data4, data5, data6);
         }
         else
         {
@@ -771,6 +884,7 @@ void pilihMenu_delete(fstream &data, fstream &data2, fstream &data3, fstream &da
             if (size2 < 1)
             {
                 cout << "Riwayat tidak ditemukan!" << endl;
+                cout << endl;
                 fungsiExit();
             }
             else
@@ -785,6 +899,7 @@ void pilihMenu_delete(fstream &data, fstream &data2, fstream &data3, fstream &da
             if (size4 < 1)
             {
                 cout << "Riwayat tidak ditemukan!" << endl;
+                cout << endl;
                 fungsiExit();
             }
             else
@@ -796,9 +911,18 @@ void pilihMenu_delete(fstream &data, fstream &data2, fstream &data3, fstream &da
         }
         else if (pilihDelete2 == '3')
         {
-            // tampilkanHeksa();
-            cout << "COMING SOON !" << endl;
-            cout << endl;
+            if (size6 < 1)
+            {
+                cout << "Riwayat tidak ditemukan!" << endl;
+                cout << endl;
+                fungsiExit();
+            }
+            else
+            {
+                tampilkanHEKSAkeTEKS(data6);
+                apusHEKSAkeTEKS(data6);
+                fungsiExit();
+            }
         }
         else if (pilihDelete2 == '4')
         {
@@ -810,7 +934,7 @@ void pilihMenu_delete(fstream &data, fstream &data2, fstream &data3, fstream &da
         {
             system("clear");
             bannerDelete();
-            pilihMenu_delete(data, data2, data3, data4);
+            pilihMenu_delete(data, data2, data3, data4, data5, data6);
         }
         else
         {
@@ -821,7 +945,7 @@ void pilihMenu_delete(fstream &data, fstream &data2, fstream &data3, fstream &da
     {
         system("clear");
         bannerRiwayat();
-        menuRUD(data, data2, data3, data4);
+        menuRUD(data, data2, data3, data4, data5, data6);
     }
     else
     {
@@ -829,7 +953,7 @@ void pilihMenu_delete(fstream &data, fstream &data2, fstream &data3, fstream &da
     }
 }
 
-void menuRUD(fstream &data, fstream &data2, fstream &data3, fstream &data4)
+void menuRUD(fstream &data, fstream &data2, fstream &data3, fstream &data4, fstream &data5, fstream &data6)
 {
     char pilihRUD;
 
@@ -846,19 +970,19 @@ void menuRUD(fstream &data, fstream &data2, fstream &data3, fstream &data4)
     {
         system("clear");
         bannerRiwayat();
-        pilihMenu_riwayat(data, data2, data3, data4);
+        pilihMenu_riwayat(data, data2, data3, data4, data5, data6);
     }
     else if (pilihRUD == '2')
     {
         system("clear");
         bannerUpdate();
-        pilihMenu_update(data, data2, data3, data4);
+        pilihMenu_update(data, data2, data3, data4, data5, data6);
     }
     else if (pilihRUD == '3')
     {
         system("clear");
         bannerDelete();
-        pilihMenu_delete(data, data2, data3, data4);
+        pilihMenu_delete(data, data2, data3, data4, data5, data6);
     }
     else if (pilihRUD == '0')
     {
@@ -1015,20 +1139,33 @@ void BINERkeTEKS(fstream &data2)
     cout << endl;
     cout << "Masukkan kode biner 8-Bit (tanpa spasi) : ";
     cin.getline(inputBINERkeTEKS.BINERkeTEKS_teks, 1000);
-
-    for (int i = 0; i < strlen(inputBINERkeTEKS.BINERkeTEKS_teks); i += 8)
+    if (string(inputBINERkeTEKS.BINERkeTEKS_teks).find(" ") != string::npos)
     {
-        string kodeBiner(inputBINERkeTEKS.BINERkeTEKS_teks);
-        bitset<8> hasil(kodeBiner.substr(i, 8));
-        tampunganHasil += char(hasil.to_ulong());
+        cout << "ERROR (Spasi Ditemukan)" << endl;
+        cout << endl;
+        return;
     }
-    tampunganHasil.copy(inputBINERkeTEKS.BINERkeTEKS_hasil, tampunganHasil.length());
-    inputBINERkeTEKS.TEKSkeBINER_hasil[tampunganHasil.length()] = '\0';
+    try
+    {
+        for (int i = 0; i < strlen(inputBINERkeTEKS.BINERkeTEKS_teks); i += 8)
+        {
+            string kodeBiner(inputBINERkeTEKS.BINERkeTEKS_teks);
+            bitset<8> hasil(kodeBiner.substr(i, 8));
+            tampunganHasil += char(hasil.to_ulong());
+        }
+        tampunganHasil.copy(inputBINERkeTEKS.BINERkeTEKS_hasil, tampunganHasil.length());
+        inputBINERkeTEKS.TEKSkeBINER_hasil[tampunganHasil.length()] = '\0';
 
-    cout << "Hasil Decipher                          : " << inputBINERkeTEKS.BINERkeTEKS_hasil << endl;
+        cout << "Hasil Decipher                          : " << inputBINERkeTEKS.BINERkeTEKS_hasil << endl;
 
-    tulisBINERkeTEKS(data2, size + 1, inputBINERkeTEKS);
-    cout << endl;
+        tulisBINERkeTEKS(data2, size + 1, inputBINERkeTEKS);
+        cout << endl;
+    }
+    catch (const exception &e)
+    {
+        cerr << "Input salah                             : " << e.what() << endl;
+        cout << endl;
+    }
 }
 
 void tampilkanBINERkeTEKS(fstream &data2)
@@ -1053,6 +1190,7 @@ void tampilkanBINERkeTEKS(fstream &data2)
 void ubahBINERkeTEKS(fstream &data2)
 {
     Cipher update;
+    string tampunganHasil;
     int pilihNomor;
 
     cout << "Silahkan pilih data yang akan diubah" << endl;
@@ -1071,23 +1209,39 @@ void ubahBINERkeTEKS(fstream &data2)
     cout << "Ubah data" << endl;
     cout << "Biner menjadi                    : ";
     cin.getline(update.BINERkeTEKS_teks, 1000);
-    string hasilBINERkeTeks;
-    for (int i = 0; i < strlen(update.BINERkeTEKS_teks); i += 8)
+    if (string(update.BINERkeTEKS_teks).find(" ") != string::npos)
     {
-        string kodeBiner(update.BINERkeTEKS_teks);
-        bitset<8> hasil(kodeBiner.substr(i, 8));
-        hasilBINERkeTeks += char(hasil.to_ulong());
+        cout << "ERROR (Spasi Ditemukan)" << endl;
+        cout << endl;
+        return;
     }
-    hasilBINERkeTeks.copy(update.BINERkeTEKS_hasil, hasilBINERkeTeks.length());
-    update.TEKSkeBINER_hasil[hasilBINERkeTeks.length()] = '\0';
+    try
+    {
+        for (int i = 0; i < strlen(update.BINERkeTEKS_teks); i += 8)
+        {
+            string kodeBiner(update.BINERkeTEKS_teks);
+            bitset<8> hasil(kodeBiner.substr(i, 8));
+            tampunganHasil += char(hasil.to_ulong());
+        }
+        tampunganHasil.copy(update.BINERkeTEKS_hasil, tampunganHasil.length());
+        update.TEKSkeBINER_hasil[tampunganHasil.length()] = '\0';
 
-    tulisBINERkeTEKS(data2, pilihNomor, update);
+        cout << "Hasil Decipher                   : " << update.BINERkeTEKS_hasil << endl;
 
-    cout << endl;
-    cout << "Data berhasil diubah menjadi" << endl;
-    cout << "Bentuk Biner 8-Bit (Tanpa Spasi) : " << update.BINERkeTEKS_teks << endl;
-    cout << "Teks                             : " << update.BINERkeTEKS_hasil << endl;
-    cout << endl;
+        tulisBINERkeTEKS(data2, pilihNomor, update);
+        cout << endl;
+
+        cout << endl;
+        cout << "Data berhasil diubah menjadi" << endl;
+        cout << "Bentuk Biner 8-Bit (Tanpa Spasi) : " << update.BINERkeTEKS_teks << endl;
+        cout << "Teks                             : " << update.BINERkeTEKS_hasil << endl;
+        cout << endl;
+    }
+    catch (const exception &e)
+    {
+        cerr << "Input salah                      : " << e.what() << endl;
+        cout << endl;
+    }
 }
 
 void apusBINERkeTEKS(fstream &data2)
@@ -1276,55 +1430,73 @@ void DESIMALkeTEKS(fstream &data4)
     Cipher inputDESIMALkeTEKS;
     string tampunganHasil = "", angkaString = "";
     int size, angkaInt;
+    bool iyaGa = true;
 
     size = ambilUkuran_data(data4);
 
     cout << endl;
-    cout << "Masukkan bentuk DESIMAL/ASCII (pisah dengan spasi) : ";
+    cout << "Masukan bentuk Desimal (pisah dengan spasi) : ";
     cin.getline(inputDESIMALkeTEKS.DESIMALkeTEKS_teks, 1000);
-
-    for (int i = 0; i < strlen(inputDESIMALkeTEKS.DESIMALkeTEKS_teks); i++)
+    try
     {
-        if (inputDESIMALkeTEKS.DESIMALkeTEKS_teks[i] == ' ')
+        for (int i = 0; i < strlen(inputDESIMALkeTEKS.DESIMALkeTEKS_teks); i++)
         {
-            angkaInt = stoi(angkaString);
+            if (inputDESIMALkeTEKS.DESIMALkeTEKS_teks[i] == ' ')
+            {
+                angkaInt = stoi(angkaString);
+                if (angkaInt >= 0 && angkaInt <= 127)
+                {
+                    tampunganHasil += char(angkaInt);
+                }
+                else
+                {
+                    iyaGa = false;
+                    cerr << "ERROR (Nilai Desimal Salah)" << endl;
+                    cout << endl;
+                    return;
+                }
+                angkaString = "";
+            }
+            else
+            {
+                angkaString += inputDESIMALkeTEKS.DESIMALkeTEKS_teks[i];
+            }
+        }
+
+        if (!angkaString.empty())
+        {
+            int angkaInt = stoi(angkaString);
             if (angkaInt >= 0 && angkaInt <= 127)
             {
                 tampunganHasil += char(angkaInt);
             }
             else
             {
-                cout << "Nilai DESIMAL/ASCII tidak valid        : " << angkaInt << endl;
+                iyaGa = false;
+                cerr << "ERROR (Nilai Desimal Salah)" << endl;
+                cout << endl;
+                return;
             }
-            angkaString = "";
         }
-        else
+        if (iyaGa)
         {
-            angkaString += inputDESIMALkeTEKS.DESIMALkeTEKS_teks[i];
+            tampunganHasil.copy(inputDESIMALkeTEKS.DESIMALkeTEKS_hasil, tampunganHasil.length());
+            inputDESIMALkeTEKS.DESIMALkeTEKS_hasil[tampunganHasil.length()] = '\0';
+            tulisTEKSkeDESIMAL(data4, size + 1, inputDESIMALkeTEKS);
+            cout << "Hasil Decipher                              : " << inputDESIMALkeTEKS.DESIMALkeTEKS_hasil << endl;
         }
+        cout << endl;
     }
-
-    if (!angkaString.empty())
+    catch (const invalid_argument &e)
     {
-        int angkaInt = stoi(angkaString);
-        if (angkaInt >= 0 && angkaInt <= 127)
-        {
-            tampunganHasil += char(angkaInt);
-        }
-        else
-        {
-            cout << "Nilai DESIMAL/ASCII tidak valid            : " << angkaInt << endl;
-        }
+        cout << "Inpus salah                                 : " << e.what() << endl;
+        cout << endl;
     }
-
-    tampunganHasil.copy(inputDESIMALkeTEKS.DESIMALkeTEKS_hasil, tampunganHasil.length());
-    inputDESIMALkeTEKS.DESIMALkeTEKS_hasil[tampunganHasil.length()] = '\0';
-
-    cout << "Hasil Decipher                                     : " << inputDESIMALkeTEKS.DESIMALkeTEKS_hasil << endl;
-
-    tulisTEKSkeDESIMAL(data4, size + 1, inputDESIMALkeTEKS);
-
-    cout << endl;
+    catch (const out_of_range &e)
+    {
+        cout << "Nilai DESIMAL/ASCII tidak valid             : " << e.what() << endl;
+        cout << endl;
+    }
 }
 
 void tampilkanDESIMALkeTEKS(fstream &data4)
@@ -1349,9 +1521,9 @@ void tampilkanDESIMALkeTEKS(fstream &data4)
 void ubahDESIMALkeTEKS(fstream &data4)
 {
     Cipher update;
-    int pilihNomor;
+    int pilihNomor, angkaInt;
     string tampunganHasil = "", angkaString = "";
-    int angkaInt;
+    bool iyaGa = true;
 
     cout << "Silahkan pilih data yang akan diubah" << endl;
     cout << "No : ";
@@ -1366,50 +1538,66 @@ void ubahDESIMALkeTEKS(fstream &data4)
     cout << "Ubah data" << endl;
     cout << "Desimal (ASCII) menjadi : ";
     cin.getline(update.DESIMALkeTEKS_teks, 1000);
-    for (int i = 0; i < strlen(update.DESIMALkeTEKS_teks); i++)
+    try
     {
-        if (update.DESIMALkeTEKS_teks[i] == ' ')
+        for (int i = 0; i < strlen(update.DESIMALkeTEKS_teks); i++)
         {
-            angkaInt = stoi(angkaString);
+            if (update.DESIMALkeTEKS_teks[i] == ' ')
+            {
+                angkaInt = stoi(angkaString);
+                if (angkaInt >= 0 && angkaInt <= 127)
+                {
+                    tampunganHasil += char(angkaInt);
+                }
+                else
+                {
+                    iyaGa = false;
+                    cerr << "ERROR (Nilai Desimal Salah)" << endl;
+                    cout << endl;
+                    return;
+                }
+                angkaString = "";
+            }
+            else
+            {
+                angkaString += update.DESIMALkeTEKS_teks[i];
+            }
+        }
+
+        if (!angkaString.empty())
+        {
+            int angkaInt = stoi(angkaString);
             if (angkaInt >= 0 && angkaInt <= 127)
             {
                 tampunganHasil += char(angkaInt);
             }
             else
             {
-                cout << "Nilai DESIMAL/ASCII tidak valid : " << angkaInt << endl;
+                iyaGa = false;
+                cerr << "ERROR (Nilai Desimal Salah)" << endl;
+                cout << endl;
+                return;
             }
-            angkaString = "";
         }
-        else
+        if (iyaGa)
         {
-            angkaString += update.DESIMALkeTEKS_teks[i];
+            tampunganHasil.copy(update.DESIMALkeTEKS_hasil, tampunganHasil.length());
+            update.DESIMALkeTEKS_hasil[tampunganHasil.length()] = '\0';
+            tulisTEKSkeDESIMAL(data4, pilihNomor, update);
+            cout << "Hasil Decipher                              : " << update.DESIMALkeTEKS_hasil << endl;
         }
+        cout << endl;
     }
-
-    if (!angkaString.empty())
+    catch (const invalid_argument &e)
     {
-        int angkaInt = stoi(angkaString);
-        if (angkaInt >= 0 && angkaInt <= 127)
-        {
-            tampunganHasil += char(angkaInt);
-        }
-        else
-        {
-            cout << "Nilai DESIMAL/ASCII tidak valid : " << angkaInt << endl;
-        }
+        cout << "Inpus salah                                 : " << e.what() << endl;
+        cout << endl;
     }
-
-    tampunganHasil.copy(update.DESIMALkeTEKS_hasil, tampunganHasil.length());
-    update.DESIMALkeTEKS_hasil[tampunganHasil.length()] = '\0';
-
-    tulisTEKSkeDESIMAL(data4, pilihNomor, update);
-
-    cout << endl;
-    cout << "Data berhasil diubah menjadi" << endl;
-    cout << "Bentuk Desimal (ASCII) : " << update.DESIMALkeTEKS_teks << endl;
-    cout << "Teks                   : " << update.DESIMALkeTEKS_hasil << endl;
-    cout << endl;
+    catch (const out_of_range &e)
+    {
+        cout << "Nilai DESIMAL/ASCII tidak valid             : " << e.what() << endl;
+        cout << endl;
+    }
 }
 
 void apusDESIMALkeTEKS(fstream &data4)
@@ -1461,6 +1649,359 @@ void apusDESIMALkeTEKS(fstream &data4)
     {
         sementara = bacaDong(dataSementara, i);
         tulisDESIMALkeTEKS(data4, i, sementara);
+    }
+}
+
+void TEKSkeHEKSA(fstream &data5)
+{
+    Cipher inputTEKSkeHEKSA;
+    string hasilHeksa = "";
+    int size, sisa, desimal;
+
+    size = ambilUkuran_data(data5);
+
+    cout << "Masukkan Teks  : ";
+    cin.getline(inputTEKSkeHEKSA.TEKSkeHEKSA_teks, 1000);
+
+    string tampunganHasil;
+    for (int i = 0; i < strlen(inputTEKSkeHEKSA.TEKSkeHEKSA_teks); i++)
+    {
+        tampunganHasil += to_string(int(inputTEKSkeHEKSA.TEKSkeHEKSA_teks[i])) + " ";
+    }
+
+    istringstream iss(tampunganHasil);
+    while (iss >> desimal)
+    {
+        string tampunganHeksa = "";
+        while (desimal > 0)
+        {
+            sisa = desimal % 16;
+            if (sisa < 10)
+            {
+                tampunganHeksa = char(sisa + 48) + tampunganHeksa;
+            }
+            else
+            {
+                tampunganHeksa = char(sisa + 87) + tampunganHeksa;
+            }
+            desimal /= 16;
+        }
+        if (tampunganHeksa.empty())
+        {
+            tampunganHeksa = "0";
+        }
+        hasilHeksa += tampunganHeksa;
+    }
+    hasilHeksa.copy(inputTEKSkeHEKSA.TEKSkeHEKSA_hasil, hasilHeksa.length());
+    inputTEKSkeHEKSA.TEKSkeHEKSA_hasil[hasilHeksa.length()] = '\0';
+
+    cout << "Hasil Encipher : " << inputTEKSkeHEKSA.TEKSkeHEKSA_hasil << endl;
+
+    tulisTEKSkeDESIMAL(data5, size + 1, inputTEKSkeHEKSA);
+
+    cout << endl;
+}
+
+void tampilkanTEKSkeHEKSA(fstream &data5)
+{
+    Cipher tampil;
+    int size;
+
+    size = ambilUkuran_data(data5);
+
+    for (int i = 1; i <= size; i++)
+    {
+        tampil = bacaDong(data5, i);
+        cout << i << endl;
+        cout << "Teks         : ";
+        cout << tampil.TEKSkeHEKSA_teks << endl;
+        cout << "Bentuk Heksa : ";
+        cout << tampil.TEKSkeHEKSA_hasil << endl;
+        cout << endl;
+    }
+}
+
+void ubahTEKSkeHEKSA(fstream &data5)
+{
+    Cipher update;
+    string hasilHeksa = "";
+    int pilihNomor, sisa, desimal;
+
+    cout << "Silahkan pilih data yang akan diubah" << endl;
+    cout << "No : ";
+    cin >> pilihNomor;
+    cin.ignore();
+    update = bacaDong(data5, pilihNomor);
+    cout << endl;
+    cout << "Data." << endl;
+    cout << "Teks         : " << update.TEKSkeHEKSA_teks << endl;
+    cout << "Bentuk Heksa : " << update.TEKSkeHEKSA_hasil << endl;
+    cout << endl;
+    cout << "Ubah data" << endl;
+    cout << "Teks menjadi : ";
+    cin.getline(update.TEKSkeHEKSA_teks, 1000);
+
+    string tampunganHasil;
+    for (int i = 0; i < strlen(update.TEKSkeHEKSA_teks); i++)
+    {
+        tampunganHasil += to_string(int(update.TEKSkeHEKSA_teks[i])) + " ";
+    }
+
+    istringstream iss(tampunganHasil);
+    while (iss >> desimal)
+    {
+        string tampunganHeksa = "";
+        while (desimal > 0)
+        {
+            sisa = desimal % 16;
+            if (sisa < 10)
+            {
+                tampunganHeksa = char(sisa + 48) + tampunganHeksa;
+            }
+            else
+            {
+                tampunganHeksa = char(sisa + 87) + tampunganHeksa;
+            }
+            desimal /= 16;
+        }
+        if (tampunganHeksa.empty())
+        {
+            tampunganHeksa = "0";
+        }
+        hasilHeksa += tampunganHeksa;
+    }
+    hasilHeksa.copy(update.TEKSkeHEKSA_hasil, hasilHeksa.length());
+    update.TEKSkeHEKSA_hasil[hasilHeksa.length()] = '\0';
+
+    tulisTEKSkeHEKSA(data5, pilihNomor, update);
+
+    cout << endl;
+
+    cout << endl;
+    cout << "Data berhasil diubah menjadi" << endl;
+    cout << "Teks         : " << update.TEKSkeHEKSA_teks << endl;
+    cout << "Bentuk Heksa : " << update.TEKSkeHEKSA_hasil << endl;
+    cout << endl;
+}
+
+void apusTEKSkeHEKSA(fstream &data5)
+{
+    fstream dataSementara;
+    Cipher kosong, sementara;
+    int pilihNomor, keluaran, size;
+
+    size = ambilUkuran_data(data5);
+
+    cout << "Silahkan pilih data yang akan diapus" << endl;
+    cout << "No : ";
+    cin >> pilihNomor;
+    cin.ignore();
+
+    kosong = bacaDong(data5, pilihNomor);
+    cout << endl;
+    cout << "Data." << endl;
+    cout << "Teks         : " << kosong.TEKSkeHEKSA_teks << endl;
+    cout << "Bentuk Heksa : " << kosong.TEKSkeHEKSA_hasil << endl;
+
+    kosong.kosongTEKSkeHEKSA = 0;
+    tulisTEKSkeHEKSA(data5, pilihNomor, kosong);
+
+    dataSementara.open("temp.bin", ios::trunc | ios::in | ios::out | ios::binary);
+    keluaran = 0;
+    for (int i = 1; i <= size; i++)
+    {
+        sementara = bacaDong(data5, i);
+        if (sementara.kosongTEKSkeHEKSA > 0)
+        {
+            tulisTEKSkeHEKSA(dataSementara, (i - keluaran), sementara);
+        }
+        else
+        {
+            keluaran++;
+            cout << "Berhasil dihapus" << endl;
+            cout << endl;
+        }
+    }
+
+    size = ambilUkuran_data(dataSementara);
+    data5.close();
+    data5.open("data_TEKSkeHEKSA.bin", ios::trunc | ios::out | ios::in | ios::binary);
+    data5.close();
+    data5.open("data_TEKSkeHEKSA.bin", ios::out | ios::in | ios::binary);
+
+    for (int i = 1; i <= size; i++)
+    {
+        sementara = bacaDong(dataSementara, i);
+        tulisTEKSkeHEKSA(data5, i, sementara);
+    }
+}
+
+void HEKSAkeTEKS(fstream &data6)
+{
+    Cipher inputHEKSAkeTEKS;
+    string tampunganHasil;
+    int size;
+
+    size = ambilUkuran_data(data6);
+
+    cout << endl;
+    cout << "Masukan bentuk Heksa (Tanpa spasi) : ";
+    cin.getline(inputHEKSAkeTEKS.HEKSAkeTEKS_teks, 1000);
+    if (string(inputHEKSAkeTEKS.HEKSAkeTEKS_teks).find(" ") != string::npos)
+    {
+        cerr << "ERROR (Spasi Ditemukan)" << endl;
+        cout << endl;
+        return;
+    }
+    try
+    {
+        for (int i = 0; i < strlen(inputHEKSAkeTEKS.HEKSAkeTEKS_teks); i += 2)
+        {
+            string tampunganHeksa = string(inputHEKSAkeTEKS.HEKSAkeTEKS_teks).substr(i, 2);
+            int tampunganDesimal = stoi(tampunganHeksa, 0, 16);
+            char tampunganTeks = static_cast<char>(tampunganDesimal);
+            tampunganHasil += tampunganTeks;
+        }
+        tampunganHasil.copy(inputHEKSAkeTEKS.HEKSAkeTEKS_hasil, tampunganHasil.length());
+        inputHEKSAkeTEKS.HEKSAkeTEKS_hasil[tampunganHasil.length()] = '\0';
+
+        cout << "Hasil Encipher                     : " << inputHEKSAkeTEKS.HEKSAkeTEKS_hasil << endl;
+
+        tulisHEKSAkeTEKS(data6, size + 1, inputHEKSAkeTEKS);
+
+        cout << endl;
+    }
+    catch (const invalid_argument &e)
+    {
+        cerr << "Input salah                        : " << e.what() << endl;
+        cout << endl;
+    }
+}
+
+void tampilkanHEKSAkeTEKS(fstream &data6)
+{
+    Cipher tampil;
+    int size;
+
+    size = ambilUkuran_data(data6);
+
+    for (int i = 1; i <= size; i++)
+    {
+        tampil = bacaDong(data6, i);
+        cout << i << endl;
+        cout << "Bentuk Heksa : ";
+        cout << tampil.HEKSAkeTEKS_teks << endl;
+        cout << "Teks         : ";
+        cout << tampil.HEKSAkeTEKS_hasil << endl;
+        cout << endl;
+    }
+}
+
+void ubahHEKSAkeTEKS(fstream &data6)
+{
+    Cipher update;
+    string tampunganHasil;
+    int pilihNomor;
+
+    cout << "Silahkan pilih data yang akan diubah" << endl;
+    cout << "No : ";
+    cin >> pilihNomor;
+    cin.ignore();
+    update = bacaDong(data6, pilihNomor);
+    cout << endl;
+    cout << "Data." << endl;
+    cout << "Bentuk Heksa : " << update.HEKSAkeTEKS_teks << endl;
+    cout << "Teks         : " << update.HEKSAkeTEKS_hasil << endl;
+    cout << endl;
+    cout << "Ubah data" << endl;
+    cout << "Bentuk Heksa (Tanpa spasi) : ";
+    cin.getline(update.HEKSAkeTEKS_teks, 1000);
+    if (string(update.HEKSAkeTEKS_teks).find(" ") != string::npos)
+    {
+        cerr << "ERROR (Spasi Ditemukan)" << endl;
+        cout << endl;
+        return;
+    }
+    try
+    {
+        for (int i = 0; i < strlen(update.HEKSAkeTEKS_teks); i += 2)
+        {
+            string tampunganHeksa = string(update.HEKSAkeTEKS_teks).substr(i, 2);
+            int tampunganDesimal = stoi(tampunganHeksa, 0, 16);
+            char tampunganTeks = static_cast<char>(tampunganDesimal);
+            tampunganHasil += tampunganTeks;
+        }
+        tampunganHasil.copy(update.HEKSAkeTEKS_hasil, tampunganHasil.length());
+        update.HEKSAkeTEKS_hasil[tampunganHasil.length()] = '\0';
+
+        cout << "Hasil Encipher                 : " << update.HEKSAkeTEKS_hasil << endl;
+
+        tulisHEKSAkeTEKS(data6, pilihNomor, update);
+
+        cout << endl;
+
+        cout << endl;
+        cout << "Data berhasil diubah menjadi" << endl;
+        cout << "Bentuk Heksa : " << update.HEKSAkeTEKS_teks << endl;
+        cout << "Teks         : " << update.HEKSAkeTEKS_hasil << endl;
+        cout << endl;
+    }
+    catch (const invalid_argument &e)
+    {
+        cerr << "Input salah                    : " << e.what() << endl;
+        cout << endl;
+    }
+}
+
+void apusHEKSAkeTEKS(fstream &data6)
+{
+    fstream dataSementara;
+    Cipher kosong, sementara;
+    int pilihNomor, keluaran, size;
+
+    size = ambilUkuran_data(data6);
+
+    cout << "Silahkan pilih data yang akan diapus" << endl;
+    cout << "No : ";
+    cin >> pilihNomor;
+    cin.ignore();
+
+    kosong = bacaDong(data6, pilihNomor);
+    cout << endl;
+    cout << "Data." << endl;
+    cout << "Teks         : " << kosong.HEKSAkeTEKS_teks << endl;
+    cout << "Bentuk Heksa : " << kosong.HEKSAkeTEKS_hasil << endl;
+
+    kosong.kosongHEKSAkeTEKS = 0;
+    tulisHEKSAkeTEKS(data6, pilihNomor, kosong);
+
+    dataSementara.open("temp.bin", ios::trunc | ios::in | ios::out | ios::binary);
+    keluaran = 0;
+    for (int i = 1; i <= size; i++)
+    {
+        sementara = bacaDong(data6, i);
+        if (sementara.kosongHEKSAkeTEKS > 0)
+        {
+            tulisHEKSAkeTEKS(dataSementara, (i - keluaran), sementara);
+        }
+        else
+        {
+            keluaran++;
+            cout << "Berhasil dihapus" << endl;
+            cout << endl;
+        }
+    }
+
+    size = ambilUkuran_data(dataSementara);
+    data6.close();
+    data6.open("data_HEKSAkeTEKS.bin", ios::trunc | ios::out | ios::in | ios::binary);
+    data6.close();
+    data6.open("data_HEKSAkeTEKS.bin", ios::out | ios::in | ios::binary);
+
+    for (int i = 1; i <= size; i++)
+    {
+        sementara = bacaDong(dataSementara, i);
+        tulisHEKSAkeTEKS(data6, i, sementara);
     }
 }
 

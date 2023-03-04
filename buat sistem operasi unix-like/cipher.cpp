@@ -33,8 +33,12 @@ struct Cipher
     int kosongHEKSAkeTEKS = 6;
     char HEKSAkeTEKS_teks[1000];
     char HEKSAkeTEKS_hasil[8000];
-    // char teksOktal[1000]
-    // char hasilOktal[]
+    int kosongTEKSkeOKTAL = 7;
+    char TEKSkeOKTAL_teks[1000];
+    char TEKSkeOKTAL_hasil[8000];
+    int kosongOKTALkeTEKS = 8;
+    char OKTALkeTEKS_teks[1000];
+    char OKTALkeTEKS_hasil[8000];
 };
 
 char getPilihan();
@@ -46,20 +50,24 @@ void cekData_TEKSkeDESIMAL(fstream &data3);
 void cekData_DESIMALkeTEKS(fstream &data4);
 void cekData_TEKSkeHEKSA(fstream &data5);
 void cekData_HEKSAkeTEKS(fstream &data6);
+void cekData_TEKSkeOKTAL(fstream &data7);
+void cekData_OKTALkeTEKS(fstream &data8);
 void tulisTEKSkeBINER(fstream &data, int pos, Cipher &inputTEKSkeBINER);
 void tulisBINERkeTEKS(fstream &data2, int pos, Cipher &inputBINERkeTEKS);
 void tulisTEKSkeDESIMAL(fstream &data3, int pos, Cipher &inputTEKSkeDESIMAL);
 void tulisDESIMALkeTEKS(fstream &data4, int pos, Cipher &inputDESIMALkeTEKS);
 void tulisTEKSkeHEKSA(fstream &data5, int pos, Cipher &inputTEKSkeHEKSA);
 void tulisHEKSAkeTEKS(fstream &data6, int pos, Cipher &inputHEKSAkeTEKS);
+void tulisTEKSkeOKTAL(fstream &data7, int pos, Cipher &inputTEKSkeOKTAL);
+void tulisOKTALkeTEKS(fstream &data8, int pos, Cipher &inputOKTALkeTEKS);
 void menuEncipher();
 void menuDecipher();
-void pilihMenu_encipher(fstream &data, fstream &data3, fstream &data5);
-void pilihMenu_decipher(fstream &data2, fstream &data4, fstream &data6);
-void pilihMenu_riwayat(fstream &data, fstream &data2, fstream &data3, fstream &data4, fstream &data5, fstream &data6);
-void pilihMenu_update(fstream &data, fstream &data2, fstream &data3, fstream &data4, fstream &data5, fstream &data6);
-void pilihMenu_delete(fstream &data, fstream &data2, fstream &data3, fstream &data4, fstream &data5, fstream &data6);
-void menuRUD(fstream &data, fstream &data2, fstream &data3, fstream &data4, fstream &data5, fstream &data6); // RUD = READ, UPDATE, DELETE
+void pilihMenu_encipher(fstream &data, fstream &data3, fstream &data5, fstream &data7);
+void pilihMenu_decipher(fstream &data2, fstream &data4, fstream &data6, fstream &data8);
+void pilihMenu_riwayat(fstream &data, fstream &data2, fstream &data3, fstream &data4, fstream &data5, fstream &data6, fstream &data7, fstream &data8);
+void pilihMenu_update(fstream &data, fstream &data2, fstream &data3, fstream &data4, fstream &data5, fstream &data6, fstream &data7, fstream &data8);
+void pilihMenu_delete(fstream &data, fstream &data2, fstream &data3, fstream &data4, fstream &data5, fstream &data6, fstream &data7, fstream &data8);
+void menuRUD(fstream &data, fstream &data2, fstream &data3, fstream &data4, fstream &data5, fstream &data6, fstream &data7, fstream &data8); // RUD = READ, UPDATE, DELETE
 void TEKSkeBINER(fstream &data);
 void tampilkanTEKSkeBINER(fstream &data);
 void ubahTEKSkeBINER(fstream &data);
@@ -84,6 +92,14 @@ void HEKSAkeTEKS(fstream &data6);
 void tampilkanHEKSAkeTEKS(fstream &data6);
 void ubahHEKSAkeTEKS(fstream &data6);
 void apusHEKSAkeTEKS(fstream &data6);
+void TEKSkeOKTAL(fstream &data7);
+void tampilkanTEKSkeOKTAL(fstream &data7);
+void ubahTEKSkeOKTAL(fstream &data7);
+void apusTEKSkeOKTAL(fstream &data7);
+void OKTALkeTEKS(fstream &data8);
+void tampilkanOKTALkeTEKS(fstream &data8);
+void ubahOKTALkeTEKS(fstream &data8);
+void apusOKTALkeTEKS(fstream &data8);
 void autoEnter();
 void bannerSelamatDatang();
 void bannerInfo();
@@ -130,7 +146,7 @@ char getPilihan()
 int main()
 {
     system("clear");
-    fstream data, data2, data3, data4, data5, data6;
+    fstream data, data2, data3, data4, data5, data6, data7, data8;
     char pilih;
 
     bannerSelamatDatang();
@@ -141,6 +157,8 @@ int main()
     cekData_DESIMALkeTEKS(data4);
     cekData_TEKSkeHEKSA(data5);
     cekData_HEKSAkeTEKS(data6);
+    cekData_TEKSkeOKTAL(data7);
+    cekData_OKTALkeTEKS(data8);
 
     while (pilih != '0')
     {
@@ -151,19 +169,19 @@ int main()
         {
             system("clear");
             bannerEncipher();
-            pilihMenu_encipher(data, data3, data5);
+            pilihMenu_encipher(data, data3, data5, data7);
         }
         else if (pilih == '2')
         {
             system("clear");
             bannerDecipher();
-            pilihMenu_decipher(data2, data4, data6);
+            pilihMenu_decipher(data2, data4, data6, data8);
         }
         else if (pilih == '3')
         {
             system("clear");
             bannerRiwayat();
-            menuRUD(data, data2, data3, data4, data5, data6);
+            menuRUD(data, data2, data3, data4, data5, data6, data7, data8);
         }
         else if (pilih == '0')
         {
@@ -205,7 +223,7 @@ void cekData_TEKSkeBINER(fstream &data)
     data.open("data_TEKSkeBINER.bin", ios::out | ios::in | ios::binary);
     if (data.is_open())
     {
-        cout << "                        DATABASE Ditemukan" << endl;
+        cout << "                        DATA BASE Ditemukan" << endl;
         cout << "                        Tekan enter untuk memuat... ";
         getchar();
         cout << endl;
@@ -216,7 +234,7 @@ void cekData_TEKSkeBINER(fstream &data)
     }
     else
     {
-        cout << "                        DATABASE Tidak Ditemukan" << endl;
+        cout << "                        DATA BASE Tidak Ditemukan" << endl;
         cout << "                        Tekan enter untuk membuat... ";
         getchar();
         cout << endl;
@@ -297,6 +315,32 @@ void cekData_HEKSAkeTEKS(fstream &data6)
     }
 }
 
+void cekData_TEKSkeOKTAL(fstream &data7)
+{
+    data7.open("data_TEKSkeOKTAL.bin", ios::out | ios::in | ios::binary);
+    if (data7.is_open())
+    {
+    }
+    else
+    {
+        data7.close();
+        data7.open("data_TEKSkeOKTAL.bin", ios::trunc | ios::out | ios::in | ios::binary);
+    }
+}
+
+void cekData_OKTALkeTEKS(fstream &data8)
+{
+    data8.open("data_OKTALkeTEKS.bin", ios::out | ios::in | ios::binary);
+    if (data8.is_open())
+    {
+    }
+    else
+    {
+        data8.close();
+        data8.open("data_OKTALkeTEKS.bin", ios::trunc | ios::out | ios::in | ios::binary);
+    }
+}
+
 void tulisTEKSkeBINER(fstream &data, int pos, Cipher &inputTEKSkeBINER)
 {
     data.seekp((pos - 1) * sizeof(Cipher), ios::beg);
@@ -334,29 +378,41 @@ void tulisHEKSAkeTEKS(fstream &data6, int pos, Cipher &inputHEKSAkeTEKS)
     data6.write(reinterpret_cast<char *>(&inputHEKSAkeTEKS), sizeof(Cipher));
 }
 
+void tulisTEKSkeOKTAL(fstream &data7, int pos, Cipher &inputTEKSkeOKTAL)
+{
+    data7.seekp((pos - 1) * sizeof(Cipher), ios::beg);
+    data7.write(reinterpret_cast<char *>(&inputTEKSkeOKTAL), sizeof(Cipher));
+}
+
+void tulisOKTALkeTEKS(fstream &data8, int pos, Cipher &inputOKTALkeTEKS)
+{
+    data8.seekp((pos - 1) * sizeof(Cipher), ios::beg);
+    data8.write(reinterpret_cast<char *>(&inputOKTALkeTEKS), sizeof(Cipher));
+}
+
 void menuEncipher()
 {
-    cout << setw(45) << "Pilih menu" << endl;
-    cout << setw(48) << "[1] Teks ke Biner" << endl;
-    cout << setw(50) << "[2] Teks ke Desimal" << endl;
-    cout << setw(55) << "[3] Teks ke Heksadesimal" << endl;
-    cout << setw(48) << "[4] Teks ke Oktal" << endl;
-    cout << setw(42) << "[0] Kembali" << endl;
-    cout << setw(42) << "Pilih? ";
+    cout << setw(46) << "Pilih menu" << endl;
+    cout << setw(49) << "[1] Teks ke Biner" << endl;
+    cout << setw(51) << "[2] Teks ke Desimal" << endl;
+    cout << setw(56) << "[3] Teks ke Heksadesimal" << endl;
+    cout << setw(49) << "[4] Teks ke Oktal" << endl;
+    cout << setw(43) << "[0] Kembali" << endl;
+    cout << setw(43) << "Pilih? ";
 }
 
 void menuDecipher()
 {
-    cout << setw(45) << "Pilih menu" << endl;
-    cout << setw(48) << "[1] Biner ke teks" << endl;
-    cout << setw(50) << "[2] Desimal ke teks" << endl;
-    cout << setw(55) << "[3] Heksadesimal ke teks" << endl;
-    cout << setw(48) << "[4] Oktal ke teks" << endl;
-    cout << setw(42) << "[0] Kembali" << endl;
-    cout << setw(42) << "Pilih? ";
+    cout << setw(46) << "Pilih menu" << endl;
+    cout << setw(49) << "[1] Biner ke teks" << endl;
+    cout << setw(51) << "[2] Desimal ke teks" << endl;
+    cout << setw(56) << "[3] Heksadesimal ke teks" << endl;
+    cout << setw(49) << "[4] Oktal ke teks" << endl;
+    cout << setw(43) << "[0] Kembali" << endl;
+    cout << setw(43) << "Pilih? ";
 }
 
-void pilihMenu_encipher(fstream &data, fstream &data3, fstream &data5)
+void pilihMenu_encipher(fstream &data, fstream &data3, fstream &data5, fstream &data7)
 {
     char pilihEncipher;
 
@@ -382,9 +438,8 @@ void pilihMenu_encipher(fstream &data, fstream &data3, fstream &data5)
     }
     else if (pilihEncipher == '4')
     {
-        // TEKSkeOKTAL();
-        cout << "COMING SOON !" << endl;
-        cout << endl;
+        TEKSkeOKTAL(data7);
+        fungsiExit();
     }
     else if (pilihEncipher == '0')
     {
@@ -396,7 +451,7 @@ void pilihMenu_encipher(fstream &data, fstream &data3, fstream &data5)
     }
 }
 
-void pilihMenu_decipher(fstream &data2, fstream &data4, fstream &data6)
+void pilihMenu_decipher(fstream &data2, fstream &data4, fstream &data6, fstream &data8)
 {
     char pilihDecipher;
 
@@ -422,9 +477,8 @@ void pilihMenu_decipher(fstream &data2, fstream &data4, fstream &data6)
     }
     else if (pilihDecipher == '4')
     {
-        // TEKSkeOKTAL();
-        cout << "COMING SOON !" << endl;
-        cout << endl;
+        OKTALkeTEKS(data8);
+        fungsiExit();
     }
     else if (pilihDecipher == '0')
     {
@@ -437,10 +491,10 @@ void pilihMenu_decipher(fstream &data2, fstream &data4, fstream &data6)
     }
 }
 
-void pilihMenu_riwayat(fstream &data, fstream &data2, fstream &data3, fstream &data4, fstream &data5, fstream &data6)
+void pilihMenu_riwayat(fstream &data, fstream &data2, fstream &data3, fstream &data4, fstream &data5, fstream &data6, fstream &data7, fstream &data8)
 {
     char pilihRiwayat, pilihRiwayat2;
-    int size, size2, size3, size4, size5, size6;
+    int size, size2, size3, size4, size5, size6, size7, size8;
 
     size = ambilUkuran_data(data);
     size2 = ambilUkuran_data(data2);
@@ -448,6 +502,8 @@ void pilihMenu_riwayat(fstream &data, fstream &data2, fstream &data3, fstream &d
     size4 = ambilUkuran_data(data4);
     size5 = ambilUkuran_data(data5);
     size6 = ambilUkuran_data(data6);
+    size7 = ambilUkuran_data(data7);
+    size8 = ambilUkuran_data(data8);
 
     cout << setw(46) << "Pilih menu" << endl;
     cout << setw(47) << "[1] Encipher" << endl;
@@ -510,15 +566,23 @@ void pilihMenu_riwayat(fstream &data, fstream &data2, fstream &data3, fstream &d
         }
         else if (pilihRiwayat2 == '4')
         {
-            // tampilkanOktal();
-            cout << "COMING SOON !" << endl;
-            cout << endl;
+            if (size7 < 1)
+            {
+                cout << "Riwayat tidak ditemukan!" << endl;
+                cout << endl;
+                fungsiExit();
+            }
+            else
+            {
+                tampilkanTEKSkeOKTAL(data7);
+                fungsiExit();
+            }
         }
         else if (pilihRiwayat2 == '0')
         {
             system("clear");
             bannerRiwayat();
-            pilihMenu_riwayat(data, data2, data3, data4, data5, data6);
+            pilihMenu_riwayat(data, data2, data3, data4, data5, data6, data7, data8);
         }
         else
         {
@@ -578,15 +642,23 @@ void pilihMenu_riwayat(fstream &data, fstream &data2, fstream &data3, fstream &d
         }
         else if (pilihRiwayat2 == '4')
         {
-            // tampilkanOktal();
-            cout << "COMING SOON !" << endl;
-            cout << endl;
+            if (size8 < 1)
+            {
+                cout << "Riwayat tidak ditemukan!" << endl;
+                cout << endl;
+                fungsiExit();
+            }
+            else
+            {
+                tampilkanOKTALkeTEKS(data8);
+                fungsiExit();
+            }
         }
         else if (pilihRiwayat2 == '0')
         {
             system("clear");
             bannerRiwayat();
-            pilihMenu_riwayat(data, data2, data3, data4, data5, data6);
+            pilihMenu_riwayat(data, data2, data3, data4, data5, data6, data7, data8);
         }
         else
         {
@@ -597,7 +669,7 @@ void pilihMenu_riwayat(fstream &data, fstream &data2, fstream &data3, fstream &d
     {
         system("clear");
         bannerRiwayat();
-        menuRUD(data, data2, data3, data4, data5, data6);
+        menuRUD(data, data2, data3, data4, data5, data6, data7, data8);
     }
     else
     {
@@ -605,10 +677,10 @@ void pilihMenu_riwayat(fstream &data, fstream &data2, fstream &data3, fstream &d
     }
 }
 
-void pilihMenu_update(fstream &data, fstream &data2, fstream &data3, fstream &data4, fstream &data5, fstream &data6)
+void pilihMenu_update(fstream &data, fstream &data2, fstream &data3, fstream &data4, fstream &data5, fstream &data6, fstream &data7, fstream &data8)
 {
     char pilihUpdate, pilihUpdate2;
-    int size, size2, size3, size4, size5, size6;
+    int size, size2, size3, size4, size5, size6, size7, size8;
 
     size = ambilUkuran_data(data);
     size2 = ambilUkuran_data(data2);
@@ -616,6 +688,8 @@ void pilihMenu_update(fstream &data, fstream &data2, fstream &data3, fstream &da
     size4 = ambilUkuran_data(data4);
     size5 = ambilUkuran_data(data5);
     size6 = ambilUkuran_data(data6);
+    size7 = ambilUkuran_data(data7);
+    size8 = ambilUkuran_data(data8);
 
     cout << setw(46) << "Pilih menu" << endl;
     cout << setw(47) << "[1] Encipher" << endl;
@@ -681,15 +755,24 @@ void pilihMenu_update(fstream &data, fstream &data2, fstream &data3, fstream &da
         }
         else if (pilihUpdate2 == '4')
         {
-            // tampilkanOktal();
-            cout << "COMING SOON !" << endl;
-            cout << endl;
+            if (size7 < 1)
+            {
+                cout << "Riwayat tidak ditemukan!" << endl;
+                cout << endl;
+                fungsiExit();
+            }
+            else
+            {
+                tampilkanTEKSkeOKTAL(data7);
+                ubahTEKSkeOKTAL(data7);
+                fungsiExit();
+            }
         }
         else if (pilihUpdate2 == '0')
         {
             system("clear");
             bannerUpdate();
-            pilihMenu_update(data, data2, data3, data4, data5, data6);
+            pilihMenu_update(data, data2, data3, data4, data5, data6, data7, data8);
         }
         else
         {
@@ -752,15 +835,24 @@ void pilihMenu_update(fstream &data, fstream &data2, fstream &data3, fstream &da
         }
         else if (pilihUpdate2 == '4')
         {
-            // tampilkanOktal();
-            cout << "COMING SOON !" << endl;
-            cout << endl;
+            if (size8 < 1)
+            {
+                cout << "Riwayat tidak ditemukan!" << endl;
+                cout << endl;
+                fungsiExit();
+            }
+            else
+            {
+                tampilkanOKTALkeTEKS(data8);
+                ubahOKTALkeTEKS(data8);
+                fungsiExit();
+            }
         }
         else if (pilihUpdate2 == '0')
         {
             system("clear");
             bannerUpdate();
-            pilihMenu_update(data, data2, data3, data4, data5, data6);
+            pilihMenu_update(data, data2, data3, data4, data5, data6, data7, data8);
         }
         else
         {
@@ -771,7 +863,7 @@ void pilihMenu_update(fstream &data, fstream &data2, fstream &data3, fstream &da
     {
         system("clear");
         bannerRiwayat();
-        menuRUD(data, data2, data3, data4, data5, data6);
+        menuRUD(data, data2, data3, data4, data5, data6, data7, data8);
     }
     else
     {
@@ -779,10 +871,10 @@ void pilihMenu_update(fstream &data, fstream &data2, fstream &data3, fstream &da
     }
 }
 
-void pilihMenu_delete(fstream &data, fstream &data2, fstream &data3, fstream &data4, fstream &data5, fstream &data6)
+void pilihMenu_delete(fstream &data, fstream &data2, fstream &data3, fstream &data4, fstream &data5, fstream &data6, fstream &data7, fstream &data8)
 {
     char pilihDelete, pilihDelete2;
-    int size, size2, size3, size4, size5, size6;
+    int size, size2, size3, size4, size5, size6, size7, size8;
 
     size = ambilUkuran_data(data);
     size2 = ambilUkuran_data(data2);
@@ -790,6 +882,8 @@ void pilihMenu_delete(fstream &data, fstream &data2, fstream &data3, fstream &da
     size4 = ambilUkuran_data(data4);
     size5 = ambilUkuran_data(data5);
     size6 = ambilUkuran_data(data6);
+    size7 = ambilUkuran_data(data7);
+    size8 = ambilUkuran_data(data8);
 
     cout << setw(46) << "Pilih menu" << endl;
     cout << setw(47) << "[1] Encipher" << endl;
@@ -855,15 +949,24 @@ void pilihMenu_delete(fstream &data, fstream &data2, fstream &data3, fstream &da
         }
         else if (pilihDelete2 == '4')
         {
-            // tampilkanOktal();
-            cout << "COMING SOON !" << endl;
-            cout << endl;
+            if (size7 < 1)
+            {
+                cout << "Riwayat tidak ditemukan!" << endl;
+                cout << endl;
+                fungsiExit();
+            }
+            else
+            {
+                tampilkanTEKSkeOKTAL(data7);
+                apusTEKSkeOKTAL(data7);
+                fungsiExit();
+            }
         }
         else if (pilihDelete2 == '0')
         {
             system("clear");
             bannerDelete();
-            pilihMenu_delete(data, data2, data3, data4, data5, data6);
+            pilihMenu_delete(data, data2, data3, data4, data5, data6, data7, data8);
         }
         else
         {
@@ -926,15 +1029,24 @@ void pilihMenu_delete(fstream &data, fstream &data2, fstream &data3, fstream &da
         }
         else if (pilihDelete2 == '4')
         {
-            // tampilkanOktal();
-            cout << "COMING SOON !" << endl;
-            cout << endl;
+            if (size8 < 1)
+            {
+                cout << "Riwayat tidak ditemukan!" << endl;
+                cout << endl;
+                fungsiExit();
+            }
+            else
+            {
+                tampilkanOKTALkeTEKS(data8);
+                apusOKTALkeTEKS(data8);
+                fungsiExit();
+            }
         }
         else if (pilihDelete2 == '0')
         {
             system("clear");
             bannerDelete();
-            pilihMenu_delete(data, data2, data3, data4, data5, data6);
+            pilihMenu_delete(data, data2, data3, data4, data5, data6, data7, data8);
         }
         else
         {
@@ -945,7 +1057,7 @@ void pilihMenu_delete(fstream &data, fstream &data2, fstream &data3, fstream &da
     {
         system("clear");
         bannerRiwayat();
-        menuRUD(data, data2, data3, data4, data5, data6);
+        menuRUD(data, data2, data3, data4, data5, data6, data7, data8);
     }
     else
     {
@@ -953,7 +1065,7 @@ void pilihMenu_delete(fstream &data, fstream &data2, fstream &data3, fstream &da
     }
 }
 
-void menuRUD(fstream &data, fstream &data2, fstream &data3, fstream &data4, fstream &data5, fstream &data6)
+void menuRUD(fstream &data, fstream &data2, fstream &data3, fstream &data4, fstream &data5, fstream &data6, fstream &data7, fstream &data8)
 {
     char pilihRUD;
 
@@ -970,19 +1082,19 @@ void menuRUD(fstream &data, fstream &data2, fstream &data3, fstream &data4, fstr
     {
         system("clear");
         bannerRiwayat();
-        pilihMenu_riwayat(data, data2, data3, data4, data5, data6);
+        pilihMenu_riwayat(data, data2, data3, data4, data5, data6, data7, data8);
     }
     else if (pilihRUD == '2')
     {
         system("clear");
         bannerUpdate();
-        pilihMenu_update(data, data2, data3, data4, data5, data6);
+        pilihMenu_update(data, data2, data3, data4, data5, data6, data7, data8);
     }
     else if (pilihRUD == '3')
     {
         system("clear");
         bannerDelete();
-        pilihMenu_delete(data, data2, data3, data4, data5, data6);
+        pilihMenu_delete(data, data2, data3, data4, data5, data6, data7, data8);
     }
     else if (pilihRUD == '0')
     {
@@ -1137,6 +1249,7 @@ void BINERkeTEKS(fstream &data2)
     size = ambilUkuran_data(data2);
 
     cout << endl;
+
     cout << "Masukkan kode biner 8-Bit (tanpa spasi) : ";
     cin.getline(inputBINERkeTEKS.BINERkeTEKS_teks, 1000);
     if (string(inputBINERkeTEKS.BINERkeTEKS_teks).find(" ") != string::npos)
@@ -1203,7 +1316,6 @@ void ubahBINERkeTEKS(fstream &data2)
     cout << "Data." << endl;
     cout << "Bentuk Biner 8-Bit (Tanpa Spasi) : " << update.BINERkeTEKS_teks << endl;
     cout << "Teks                             : " << update.BINERkeTEKS_hasil << endl;
-
     cout << endl;
 
     cout << "Ubah data" << endl;
@@ -1306,15 +1418,14 @@ void TEKSkeDESIMAL(fstream &data3)
 
     cout << "Masukkan Teks  : ";
     cin.getline(inputTEKSkeDESIMAL.TEKSkeDESIMAL_teks, 1000);
-    cout << "Hasil Encipher : ";
     for (int i = 0; i < strlen(inputTEKSkeDESIMAL.TEKSkeDESIMAL_teks); i++)
     {
-        cout << int(inputTEKSkeDESIMAL.TEKSkeDESIMAL_teks[i]) << " ";
         tampunganHasil += to_string(int(inputTEKSkeDESIMAL.TEKSkeDESIMAL_teks[i])) + " ";
     }
     tampunganHasil.copy(inputTEKSkeDESIMAL.TEKSkeDESIMAL_hasil, tampunganHasil.length());
     inputTEKSkeDESIMAL.TEKSkeDESIMAL_hasil[tampunganHasil.length()] = '\0';
-    cout << endl;
+
+    cout << "Hasil Encipher : " << inputTEKSkeDESIMAL.TEKSkeDESIMAL_hasil << endl;
 
     tulisTEKSkeDESIMAL(data3, size + 1, inputTEKSkeDESIMAL);
 
@@ -1913,6 +2024,7 @@ void ubahHEKSAkeTEKS(fstream &data6)
     cout << "Bentuk Heksa : " << update.HEKSAkeTEKS_teks << endl;
     cout << "Teks         : " << update.HEKSAkeTEKS_hasil << endl;
     cout << endl;
+
     cout << "Ubah data" << endl;
     cout << "Bentuk Heksa (Tanpa spasi) : ";
     cin.getline(update.HEKSAkeTEKS_teks, 1000);
@@ -2005,6 +2117,311 @@ void apusHEKSAkeTEKS(fstream &data6)
     }
 }
 
+void TEKSkeOKTAL(fstream &data7)
+{
+    Cipher inputTEKSkeOKTAL;
+    string tampunganDesimal, tampunganHasil;
+    int size, angkaInt;
+
+    size = ambilUkuran_data(data7);
+
+    cout << "Masukkan Teks  : ";
+    cin.getline(inputTEKSkeOKTAL.TEKSkeOKTAL_teks, 1000);
+    for (int i = 0; i < strlen(inputTEKSkeOKTAL.TEKSkeOKTAL_teks); i++)
+    {
+        tampunganDesimal += to_string(int(inputTEKSkeOKTAL.TEKSkeOKTAL_teks[i])) + " ";
+    }
+    tampunganDesimal.copy(inputTEKSkeOKTAL.TEKSkeOKTAL_hasil, tampunganDesimal.length());
+    inputTEKSkeOKTAL.TEKSkeOKTAL_hasil[tampunganDesimal.length()] = '\0';
+
+    istringstream iss(tampunganDesimal);
+    while (iss >> angkaInt)
+    {
+        ostringstream oss;
+        oss << oct << angkaInt;
+        tampunganHasil += oss.str() + " ";
+    }
+    tampunganHasil.copy(inputTEKSkeOKTAL.TEKSkeOKTAL_hasil, tampunganHasil.length());
+    inputTEKSkeOKTAL.TEKSkeOKTAL_hasil[tampunganHasil.length()] = '\0';
+
+    cout << "Hasil Encipher : " << inputTEKSkeOKTAL.TEKSkeOKTAL_hasil << endl;
+
+    tulisTEKSkeOKTAL(data7, size + 1, inputTEKSkeOKTAL);
+
+    cout << endl;
+}
+
+void tampilkanTEKSkeOKTAL(fstream &data7)
+{
+    Cipher tampil;
+    int size;
+
+    size = ambilUkuran_data(data7);
+
+    for (int i = 1; i <= size; i++)
+    {
+        tampil = bacaDong(data7, i);
+        cout << i << endl;
+        cout << "Bentuk Heksa : ";
+        cout << tampil.TEKSkeOKTAL_teks << endl;
+        cout << "Teks         : ";
+        cout << tampil.TEKSkeOKTAL_hasil << endl;
+        cout << endl;
+    }
+}
+
+void ubahTEKSkeOKTAL(fstream &data7)
+{
+    Cipher update;
+    string tampunganDesimal, tampunganHasil;
+    int pilihNomor, angkaInt;
+
+    cout << "Silahkan pilih data yang akan diubah" << endl;
+    cout << "No : ";
+    cin >> pilihNomor;
+    cin.ignore();
+    update = bacaDong(data7, pilihNomor);
+    cout << endl;
+    cout << "Data." << endl;
+    cout << "Teks         : " << update.TEKSkeOKTAL_teks << endl;
+    cout << "Bentuk Oktal : " << update.TEKSkeOKTAL_hasil << endl;
+    cout << endl;
+
+    cout << "Ubah data" << endl;
+    cout << "Teks menjadi : ";
+    cin.getline(update.TEKSkeOKTAL_teks, 1000);
+    for (int i = 0; i < strlen(update.TEKSkeOKTAL_teks); i++)
+    {
+        tampunganDesimal += to_string(int(update.TEKSkeOKTAL_teks[i])) + " ";
+    }
+    tampunganDesimal.copy(update.TEKSkeOKTAL_hasil, tampunganDesimal.length());
+    update.TEKSkeOKTAL_hasil[tampunganDesimal.length()] = '\0';
+
+    istringstream iss(tampunganDesimal);
+    while (iss >> angkaInt)
+    {
+        ostringstream oss;
+        oss << oct << angkaInt;
+        tampunganHasil += oss.str() + " ";
+    }
+    tampunganHasil.copy(update.TEKSkeOKTAL_hasil, tampunganHasil.length());
+    update.TEKSkeOKTAL_hasil[tampunganHasil.length()] = '\0';
+
+    tulisTEKSkeOKTAL(data7, pilihNomor, update);
+
+    cout << endl;
+
+    cout << endl;
+    cout << "Data berhasil diubah menjadi" << endl;
+    cout << "Teks         : " << update.TEKSkeOKTAL_teks << endl;
+    cout << "Bentuk Oktal : " << update.TEKSkeOKTAL_hasil << endl;
+    cout << endl;
+}
+
+void apusTEKSkeOKTAL(fstream &data7)
+{
+    fstream dataSementara;
+    Cipher kosong, sementara;
+    int pilihNomor, keluaran, size;
+
+    size = ambilUkuran_data(data7);
+
+    cout << "Silahkan pilih data yang akan diapus" << endl;
+    cout << "No : ";
+    cin >> pilihNomor;
+    cin.ignore();
+
+    kosong = bacaDong(data7, pilihNomor);
+    cout << endl;
+    cout << "Data." << endl;
+    cout << "Teks         : " << kosong.TEKSkeOKTAL_teks << endl;
+    cout << "Bentuk Oktal : " << kosong.TEKSkeOKTAL_hasil << endl;
+
+    kosong.kosongTEKSkeOKTAL = 0;
+    tulisTEKSkeOKTAL(data7, pilihNomor, kosong);
+
+    dataSementara.open("temp.bin", ios::trunc | ios::in | ios::out | ios::binary);
+    keluaran = 0;
+    for (int i = 1; i <= size; i++)
+    {
+        sementara = bacaDong(data7, i);
+        if (sementara.kosongTEKSkeOKTAL > 0)
+        {
+            tulisTEKSkeOKTAL(dataSementara, (i - keluaran), sementara);
+        }
+        else
+        {
+            keluaran++;
+            cout << "Berhasil dihapus" << endl;
+            cout << endl;
+        }
+    }
+
+    size = ambilUkuran_data(dataSementara);
+    data7.close();
+    data7.open("data_TEKSkeOKTAL.bin", ios::trunc | ios::out | ios::in | ios::binary);
+    data7.close();
+    data7.open("data_TEKSkeOKTAL.bin", ios::out | ios::in | ios::binary);
+
+    for (int i = 1; i <= size; i++)
+    {
+        sementara = bacaDong(dataSementara, i);
+        tulisTEKSkeOKTAL(data7, i, sementara);
+    }
+}
+
+void OKTALkeTEKS(fstream &data8)
+{
+    Cipher inputOKTALkeTEKS;
+    string tampunganOktal, tampunganHasil;
+    int oktalInt, size;
+
+    size = ambilUkuran_data(data8);
+
+    try
+    {
+        cout << endl;
+        cout << "Masukan Oktal (pisah dengan spasi) : ";
+        cin.getline(inputOKTALkeTEKS.OKTALkeTEKS_teks, 1000);
+
+        istringstream iss(inputOKTALkeTEKS.OKTALkeTEKS_teks);
+        while (iss >> tampunganOktal)
+        {
+            oktalInt = stoi(tampunganOktal, 0, 8);
+            tampunganHasil += char(oktalInt);
+        }
+        tampunganHasil.copy(inputOKTALkeTEKS.OKTALkeTEKS_hasil, tampunganHasil.length());
+        inputOKTALkeTEKS.OKTALkeTEKS_hasil[tampunganHasil.length()] = '\0';
+
+        cout << "Hasil Decipher                     : " << inputOKTALkeTEKS.OKTALkeTEKS_hasil << endl;
+
+        tulisOKTALkeTEKS(data8, size + 1, inputOKTALkeTEKS);
+
+        cout << endl;
+    }
+    catch (const exception &e)
+    {
+        cerr << "Error                              : " << e.what() << endl;
+        cout << endl;
+        fungsiExit();
+    }
+}
+
+void tampilkanOKTALkeTEKS(fstream &data8)
+{
+    Cipher tampil;
+    int size;
+
+    size = ambilUkuran_data(data8);
+
+    for (int i = 1; i <= size; i++)
+    {
+        tampil = bacaDong(data8, i);
+        cout << i << endl;
+        cout << "Bentuk Heksa : ";
+        cout << tampil.OKTALkeTEKS_teks << endl;
+        cout << "Teks         : ";
+        cout << tampil.OKTALkeTEKS_hasil << endl;
+        cout << endl;
+    }
+}
+
+void ubahOKTALkeTEKS(fstream &data8)
+{
+    Cipher update;
+    string tampunganOktal, tampunganHasil;
+    int pilihNomor, oktalInt;
+
+    cout << "Silahkan pilih data yang akan diubah" << endl;
+    cout << "No : ";
+    cin >> pilihNomor;
+    cin.ignore();
+    update = bacaDong(data8, pilihNomor);
+    cout << endl;
+    cout << "Data." << endl;
+    cout << "Teks         : " << update.OKTALkeTEKS_teks << endl;
+    cout << "Bentuk Oktal : " << update.OKTALkeTEKS_hasil << endl;
+    cout << endl;
+    try
+    {
+        cout << "Ubah data" << endl;
+        cout << "Teks menjadi : ";
+
+        istringstream iss(update.OKTALkeTEKS_teks);
+        while (iss >> tampunganOktal)
+        {
+            oktalInt = stoi(tampunganOktal, 0, 8);
+            tampunganHasil += char(oktalInt);
+        }
+        tampunganHasil.copy(update.OKTALkeTEKS_hasil, tampunganHasil.length());
+        update.OKTALkeTEKS_hasil[tampunganHasil.length()] = '\0';
+
+        cout << "Hasil Decipher                     : " << update.OKTALkeTEKS_hasil << endl;
+
+        tulisOKTALkeTEKS(data8, pilihNomor, update);
+
+        cout << endl;
+    }
+    catch (const exception &e)
+    {
+        cerr << "Error                              : " << e.what() << endl;
+        cout << endl;
+        fungsiExit();
+    }
+}
+
+void apusOKTALkeTEKS(fstream &data8)
+{
+    fstream dataSementara;
+    Cipher kosong, sementara;
+    int pilihNomor, keluaran, size;
+
+    size = ambilUkuran_data(data8);
+
+    cout << "Silahkan pilih data yang akan diapus" << endl;
+    cout << "No : ";
+    cin >> pilihNomor;
+    cin.ignore();
+
+    kosong = bacaDong(data8, pilihNomor);
+    cout << endl;
+    cout << "Data." << endl;
+    cout << "Bentuk Oktal : " << kosong.OKTALkeTEKS_teks << endl;
+    cout << "Teks         : " << kosong.OKTALkeTEKS_hasil << endl;
+
+    kosong.kosongOKTALkeTEKS = 0;
+    tulisOKTALkeTEKS(data8, pilihNomor, kosong);
+
+    dataSementara.open("temp.bin", ios::trunc | ios::in | ios::out | ios::binary);
+    keluaran = 0;
+    for (int i = 1; i <= size; i++)
+    {
+        sementara = bacaDong(data8, i);
+        if (sementara.kosongOKTALkeTEKS > 0)
+        {
+            tulisOKTALkeTEKS(dataSementara, (i - keluaran), sementara);
+        }
+        else
+        {
+            keluaran++;
+            cout << "Berhasil dihapus" << endl;
+            cout << endl;
+        }
+    }
+
+    size = ambilUkuran_data(dataSementara);
+    data8.close();
+    data8.open("data_OKTALkeTEKS.bin", ios::trunc | ios::out | ios::in | ios::binary);
+    data8.close();
+    data8.open("data_OKTALkeTEKS.bin", ios::out | ios::in | ios::binary);
+
+    for (int i = 1; i <= size; i++)
+    {
+        sementara = bacaDong(dataSementara, i);
+        tulisOKTALkeTEKS(data8, i, sementara);
+    }
+}
+
 void autoEnter()
 {
     initscr();
@@ -2027,15 +2444,17 @@ void bannerSelamatDatang()
 void bannerInfo()
 {
     cout << "                  Dalam program ini kalian dapat merubah teks" << endl;
-    cout << "           Menjadi BINER, DESIMAL, HEKSADESIMAL, OKTAL | (vice versa)" << endl;
+    cout << "           Menjadi BINER, DESIMAL, HEKSADESIMAL, OKTAL & (vice versa)" << endl;
     cout << endl;
     cout << "                      Program ini menggunakan konsep CRUD" << endl;
     cout << "        Dimana kalian dapat men-CREATE, READ, UPDATE, DELETE, sebuah data" << endl;
     cout << endl;
     cout << "         Untuk catatan: Biner yang digunakan adalah Biner 8-bit" << endl;
     cout << "                        Semua data akan disimpan ke dalam sebuah file" << endl;
-    cout << "                        Program belum final T__T" << endl;
-    cout << "                        Namun CRUD sudah berjalan :)" << endl;
+    cout << "                        Program sudah final :)" << endl;
+    cout << "                        Namun source code masih belum final" << endl;
+    cout << "                        Fitur baru dan optimization akan hadir!" << endl;
+
     cout << endl;
 }
 

@@ -53,13 +53,13 @@ Maka disarankan menggunakan Embarcadero Dev-C++ (Dev-C++ dengan compiler \*terba
 Download disini <https://github.com/Embarcadero/Dev-Cpp><br>
 Atau dapat menambahkan secara manual Compiler TDM-GCC kedalam path environment
 
-### Linux
+### Linux & macOS
 
-Untuk Linux dibutuhkan library curses.h atau ncurses.h<br>
+Untuk Linux & macOS dibutuhkan library curses.h atau ncurses.h<br>
 Sebelum dapat menggunakan #include <ncurses.h> atau #include <curses.h> ke dalam source code<br>
 Pastikan ncurses telah terinstall<br>
 <br>
-Berikut cara memastikan apakah ncurses terinstall:
+<b>Berikut cara memastikan apakah ncurses terinstall:</b>
 
 #### Ubuntu (Atau Linux berbasis Debian lainnya)
 
@@ -73,9 +73,15 @@ dpkg -s libncurses5-dev
 rpm -qa | grep ncurses
 ```
 
+#### macOS
+
+```sh
+ncurses --version
+```
+
 Jika ncurses tidak ditemukan, maka install terlebih dahulu<br>
 <br>
-Cara install:
+<b>Cara install:</b>
 
 #### Ubuntu (Atau Linux berbasis Debian lainnya)
 
@@ -91,17 +97,32 @@ sudo dnf install ncurses-devel
 
 ```
 
-<br>
-
-Lalu setelah itu pasang linker -lncurses pada IDE<br>
-
-Atau bisa menambahkannya saat akan melakukan proses compile secara manual<br>
-
-Misal CMD atau Terminal sudah ada di folder yang sama dengan source code (bernama main.cpp), maka
+#### macOS
 
 ```sh
 
-g++ -lncurses main.cpp -o main
+brew install ncurses
+
+```
+
+<br>
+
+<b>Selanjutnya:</b><br>
+Pasang linker -lncurses pada IDE<br>
+Atau bisa menambahkannya saat akan melakukan proses compile secara manual<br>
+Misal CMD atau Terminal sudah ada di folder yang sama dengan source code (bernama cipher.cpp), maka
+
+```sh
+
+g++ -lncurses cipher.cpp -o cipher
+
+```
+
+Atau
+
+```sh
+
+clang++ -lncurses cipher.cpp -o cipher
 
 ```
 
@@ -134,4 +155,4 @@ g++ -lncurses main.cpp -o main
 ---
 
 Baris kode yang masih terlalu panjang <br>
-Penulisan kode masih belum efisien
+Penulisan kode masih belum efektif dan efisien

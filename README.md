@@ -119,8 +119,8 @@ g++ -lncurses main.cpp -o main
 | Desimal ke Teks |    ✅    |       | None so far |
 | Teks ke Heksa   |    ✅    |       | None so far |
 | Heksa ke Teks   |    ✅    |       | None so far |
-| Teks ke Oktal   |          |  ⭕️  |             |
-| Oktal ke Teks   |          |  ⭕️  |             |
+| Teks ke Oktal   |    ✅    |       | None so far |
+| Oktal ke Teks   |    ✅    |       | None so far |
 | CREATE          |    ✅    |       | None so far |
 | READ            |    ✅    |       | None so far |
 | UPDATE          |    ✅    |       | None so far |
